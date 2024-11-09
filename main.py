@@ -90,7 +90,7 @@ if __name__ == '__main__':
     batch_size = 500
 
     train_dataloader = DataLoader(training_data, batch_size=batch_size, pin_memory=True, shuffle=True)
-    test_dataloader = DataLoader(test_data, batch_size=batch_size*2, pin_memory=True, shuffle=True)
+    test_dataloader = DataLoader(test_data, batch_size=batch_size, pin_memory=True, shuffle=True)
 
     model = NeuralNetwork().to(device)
     print(model)
