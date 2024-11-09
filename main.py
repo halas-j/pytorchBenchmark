@@ -12,7 +12,7 @@ class NeuralNetwork(nn.Module):
         super().__init__()
         self.flatten = nn.Flatten()
         self.linear_relu_stack = nn.Sequential(
-            nn.Linear(3 * 32 * 32, 512),
+            nn.Linear(3 * 224 * 224, 512),
             nn.ReLU(),
             nn.Linear(512, 512),
             nn.ReLU(),
@@ -27,8 +27,6 @@ class NeuralNetwork(nn.Module):
 
 def train_loop(dataloader, model, loss_fn, optimizer):
     size = len(dataloader.dataset)
-    # Set the model to training mode - important for batch normalization and dropout layers
-    # Unnecessary in this situation but added for best practices
     model.to("cuda")
     model.train()
     for batch, (X, y) in enumerate(dataloader):
@@ -77,21 +75,19 @@ if __name__ == '__main__':
     )
     print(f"Using {device} device")
 
-    training_data = datasets.CIFAR100(
-        root="data",
-        train=True,
-        download=True,
+    training_data = datasets.FakeData(
+        size=10000,
+        num_classes=100,
         transform=ToTensor()
     )
 
-    test_data = datasets.CIFAR100(
-        root="data",
-        train=False,
-        download=True,
+    test_data = datasets.FakeData(
+        size=10000,
+        num_classes=100,
         transform=ToTensor()
     )
 
-    batch_size = 400
+    batch_size = 500
 
     train_dataloader = DataLoader(training_data, batch_size=batch_size, pin_memory=True, shuffle=True)
     test_dataloader = DataLoader(test_data, batch_size=batch_size*2, pin_memory=True, shuffle=True)
@@ -101,7 +97,7 @@ if __name__ == '__main__':
 
     learning_rate = 1e-3
 
-    epochs = 100
+    epochs = 500
 
     start_time = time.time()
 
