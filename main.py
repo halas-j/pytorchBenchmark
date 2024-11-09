@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
     learning_rate = 1e-3
 
-    epochs = 500
+    epochs = 50
 
     start_time = time.time()
 
